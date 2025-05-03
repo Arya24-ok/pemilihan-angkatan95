@@ -1,9 +1,9 @@
 document.getElementById('voteForm').addEventListener('submit', function (e) {
   e.preventDefault();
-  
+
   // Mencari kandidat yang dipilih
   const selected = document.querySelector('input[name=kandidat]:checked');
-  
+
   if (!selected) {
     document.getElementById('message').textContent = 'Silakan pilih salah satu kandidat!';
     return;
@@ -12,7 +12,7 @@ document.getElementById('voteForm').addEventListener('submit', function (e) {
   const kandidat = selected.value;
   const waktu = new Date().toISOString();
   const data = {
-    kandidat: kandidat,
+    nama: kandidat,
     waktu: waktu
   };
 
@@ -24,7 +24,7 @@ document.getElementById('voteForm').addEventListener('submit', function (e) {
   // Menampilkan pesan terima kasih
   document.getElementById('message').textContent = `Terima kasih, Anda memilih ${kandidat}.`;
   document.getElementById('voteForm').reset();
-  
+
   // Mengirim hasil ke server menggunakan fetch
   submitVote(kandidat);
 });
@@ -32,7 +32,7 @@ document.getElementById('voteForm').addEventListener('submit', function (e) {
 function submitVote(nama) {
   fetch('https://script.google.com/macros/s/AKfycbyS5pnFkTEnxbvsth0QDCReI7fNkfIT4lIUyPzAj1h08AEs43qNE-8-OvUj5AsJC7GT/exec', {
     method: 'POST',
-    body: JSON.stringify({ nama }),
+    body: JSON.stringify({ nama: nama }),
     headers: { 'Content-Type': 'application/json' }
   })
   .then(res => {
